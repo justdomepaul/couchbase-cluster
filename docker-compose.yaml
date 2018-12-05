@@ -1,0 +1,23 @@
+version: '3.6'
+services:
+  couchbase-cluster:
+    container_name: CouchbaseCluster
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      output_net:
+    environment:
+      - AUTO_REBALANCE=false
+      - CLUSTER_CUSTOM_USERNAME=root2526
+      - CLUSTER_CUSTOM_PASSWORD=root2526
+    ports:
+      - 8091-8094:8091-8094
+      - 11207:11207
+      - 11210:11210
+      - 11211:11211
+      - 18091:18091
+      - 18092:18092
+networks:
+  output_net:
+    external: true
