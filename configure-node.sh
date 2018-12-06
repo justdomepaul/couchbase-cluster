@@ -30,13 +30,24 @@ if [ "$TYPE" = "WORKER" ]; then
   sleep 15
 
   IP=$(hostname -i)
+  echo "Server-Add: ${COUCHBASE_MASTER}:8091"
+  couchbase-cli server-add --cluster=$COUCHBASE_MASTER:8091 --user=$CLUSTER_CUSTOM_USERNAME --password=$CLUSTER_CUSTOM_PASSWORD --server-add=$IP --server-add-username=$CLUSTER_CUSTOM_USERNAME --server-add-password=$CLUSTER_CUSTOM_PASSWORD
 
   echo "Auto Rebalance: $AUTO_REBALANCE"
   if [ "$AUTO_REBALANCE" = "true" ]; then
-    couchbase-cli rebalance --cluster=$COUCHBASE_MASTER:8091 --user=$CLUSTER_CUSTOM_USERNAME --password=$CLUSTER_CUSTOM_PASSWORD --server-add=$IP
-  else
-    couchbase-cli server-add --cluster=$COUCHBASE_MASTER:8091 --user=$CLUSTER_CUSTOM_USERNAME --password=$CLUSTER_CUSTOM_PASSWORD --server-add=$IP --server-add-username=$CLUSTER_CUSTOM_USERNAME --server-add-password=$CLUSTER_CUSTOM_PASSWORD
-  fi;
-fi;
+    couchbase-cli rebalance --cluster=$COUCHBASE_MASTER:8091 --user=$CLUSTER_CUSTOM_USERNAME --password=$CLUSTER_CUSTOM_PASSWORD
+  fi
+else
+  sleep 15
+
+  couchbase-cli cluster-init -c 127.0.0.1 --cluster-username $CLUSTER_CUSTOM_USERNAME \
+ --cluster-password $CLUSTER_CUSTOM_PASSWORD \
+ --cluster-ramsize 2048 \
+ --cluster-index-ramsize 1024 \
+ --cluster-eventing-ramsize 1024 \
+ --cluster-fts-ramsize 1024 \
+ --cluster-analytics-ramsize 1024 \
+ --index-storage-setting default
+fi
 
 fg 1
