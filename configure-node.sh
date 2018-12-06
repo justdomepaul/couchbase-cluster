@@ -33,7 +33,7 @@ if [ "$TYPE" = "WORKER" ]; then
 
   echo "Auto Rebalance: $AUTO_REBALANCE"
   if [ "$AUTO_REBALANCE" = "true" ]; then
-    couchbase-cli rebalance --cluster=$COUCHBASE_MASTER:8091 --user=$CLUSTER_CUSTOM_USERNAME --password=$CLUSTER_CUSTOM_PASSWORD --server-add=$IP --server-add-username=$CLUSTER_CUSTOM_USERNAME --server-add-password=$CLUSTER_CUSTOM_PASSWORD
+    couchbase-cli rebalance --cluster=$COUCHBASE_MASTER:8091 --user=$CLUSTER_CUSTOM_USERNAME --password=$CLUSTER_CUSTOM_PASSWORD --server-add=$IP
   else
     couchbase-cli server-add --cluster=$COUCHBASE_MASTER:8091 --user=$CLUSTER_CUSTOM_USERNAME --password=$CLUSTER_CUSTOM_PASSWORD --server-add=$IP --server-add-username=$CLUSTER_CUSTOM_USERNAME --server-add-password=$CLUSTER_CUSTOM_PASSWORD
   fi;
