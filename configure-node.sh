@@ -29,7 +29,7 @@ echo "Type: $TYPE"
 if [ "$TYPE" = "WORKER" ]; then
   sleep 15
 
-  IP=`hostname -i`
+  IP=$(hostname -i)
 
   echo "Auto Rebalance: $AUTO_REBALANCE"
   if [ "$AUTO_REBALANCE" = "true" ]; then
